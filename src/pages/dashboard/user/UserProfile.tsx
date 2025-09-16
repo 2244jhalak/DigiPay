@@ -14,14 +14,27 @@ const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 export default function UserProfile() {
   const [user, setUser] = useState<IAuth | null>(getUser());
-  const [formData, setFormData] = useState({ name: "", profileImage: "" });
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    profileImage: "",
+    
+    newPassword: "",
+  });
   const [file, setFile] = useState<File | null>(null);
   const [updateProfile, { isLoading }] = useUpdateProfileMutation();
 
   useEffect(() => {
     const data = getUser();
     setUser(data);
-    if (data) setFormData({ name: data.name, profileImage: data.profileImage || "" });
+    if (data)
+      setFormData({
+        name: data.name,
+        email: data.email,
+        profileImage: data.profileImage || "",
+        
+        newPassword: "",
+      });
   }, []);
 
   // Input change
@@ -39,10 +52,13 @@ export default function UserProfile() {
     form.append("file", file);
     form.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
-    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-      method: "POST",
-      body: form,
-    });
+    const res = await fetch(
+      `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+      {
+        method: "POST",
+        body: form,
+      }
+    );
 
     const data = await res.json();
     return data.secure_url;
@@ -59,7 +75,14 @@ export default function UserProfile() {
         profileImageUrl = await uploadToCloudinary(file);
       }
 
-      const res: any = await updateProfile({ authId: user.id, name: formData.name, profileImage: profileImageUrl }).unwrap();
+      const res: any = await updateProfile({
+        authId: user.id,
+        name: formData.name,
+        email: formData.email,
+        profileImage: profileImageUrl,
+        
+        newPassword: formData.newPassword || undefined,
+      }).unwrap();
 
       localStorage.setItem("user", JSON.stringify(res.user));
       setUser(res.user);
@@ -70,6 +93,9 @@ export default function UserProfile() {
         text: "Your profile has been updated successfully!",
         confirmButtonColor: "#18BC9C",
       });
+
+      // Clear password fields
+      setFormData({ ...formData, newPassword: "" });
     } catch (err: any) {
       Swal.fire({
         icon: "error",
@@ -97,13 +123,15 @@ export default function UserProfile() {
           <AvatarImage src={user.profileImage || ""} alt={user.name} />
           <AvatarFallback>{user.name ? user.name[0].toUpperCase() : "U"}</AvatarFallback>
         </Avatar>
-        <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white">{user.name}</CardTitle>
+        <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white">
+          {user.name}
+        </CardTitle>
         <p className="text-sm text-gray-500 dark:text-gray-300">{user.role}</p>
-        
       </CardHeader>
 
       <CardContent className="p-6 space-y-4">
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <Input
             name="name"
             value={formData.name}
@@ -112,6 +140,17 @@ export default function UserProfile() {
             className="bg-white/20 backdrop-blur-md border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[#18BC9C] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
             required
           />
+          {/* Email */}
+          <Input
+            name="email"
+            type="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email Address"
+            className="bg-white/20 backdrop-blur-md border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[#18BC9C] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+            required
+          />
+          {/* Profile Image */}
           <Input
             type="file"
             name="profileImage"
@@ -119,6 +158,18 @@ export default function UserProfile() {
             accept="image/*"
             className="bg-white/20 backdrop-blur-md border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[#18BC9C] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
           />
+          
+          {/* New Password */}
+          <Input
+            type="password"
+            name="newPassword"
+            value={formData.newPassword}
+            onChange={handleChange}
+            placeholder="New Password"
+            className="bg-white/20 backdrop-blur-md border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-red-400 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+          />
+
+          {/* Submit */}
           <Button
             type="submit"
             disabled={isLoading}
@@ -131,8 +182,19 @@ export default function UserProfile() {
                 fill="none"
                 viewBox="0 0 24 24"
               >
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                />
               </svg>
             ) : (
               "Update Profile"
@@ -141,7 +203,7 @@ export default function UserProfile() {
         </form>
 
         <div className="mt-4 text-gray-700 dark:text-gray-300">
-          <span className="font-medium">📧 Email:</span> {user.email}
+          <span className="font-medium">📧 Current Email:</span> {user.email}
         </div>
 
         <Button

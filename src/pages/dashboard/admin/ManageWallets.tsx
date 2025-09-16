@@ -5,6 +5,7 @@ import {
   useGetWalletQuery,
   useToggleWalletBlockMutation,
 } from "@/redux/walletSlice";
+import { useGetAllAuthIdsQuery } from "@/redux/authSlice";
 import {
   Card,
   CardContent,
@@ -20,7 +21,12 @@ import Swal from "sweetalert2";
 export default function ManageWallets() {
   const [authId, setAuthId] = useState("");
   const [searchId, setSearchId] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
+  // ✅ সব Auth ID ফেচ করা
+  const { data: authIds } = useGetAllAuthIdsQuery({});
+
+  // ✅ নির্দিষ্ট Wallet ফেচ
   const { data: wallet, isLoading, isError, refetch } = useGetWalletQuery(
     { authId: searchId },
     { skip: !searchId }
@@ -32,6 +38,7 @@ export default function ManageWallets() {
   const handleSearch = () => {
     if (authId.trim()) {
       setSearchId(authId.trim());
+      setShowSuggestions(false); // search করার পর dropdown বন্ধ হবে
     }
   };
 
@@ -57,25 +64,51 @@ export default function ManageWallets() {
     }
   };
 
+  // ✅ Filter করা হচ্ছে typed value অনুযায়ী
+  const filteredAuthIds =
+    authIds?.authIds?.filter((u: any) =>
+      u.id.toLowerCase().includes(authId.toLowerCase())
+    ) || [];
+
   return (
     <div className="max-w-3xl mx-auto space-y-6 p-4">
-      {/* Heading */}
       <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200">
         Manage Any User&apos;s Wallet
       </h1>
 
-      {/* Search Box */}
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex flex-col sm:flex-row gap-2 relative">
         <Input
           type="text"
           placeholder="Enter Auth ID..."
           value={authId}
           onChange={(e) => setAuthId(e.target.value)}
+          onFocus={() => setShowSuggestions(true)}
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 150)} // click করার সময় dropdown না হারায়
           className="flex-1"
         />
         <Button onClick={handleSearch} className="w-full sm:w-auto">
           Search
         </Button>
+
+        {/* Suggestion Dropdown */}
+        {showSuggestions && filteredAuthIds.length > 0 && (
+          <div className="absolute top-12 left-0 w-full max-h-40 overflow-y-auto bg-white dark:bg-gray-800 shadow-md rounded-md border border-gray-200 dark:border-gray-700 z-10">
+            {filteredAuthIds.map((u: any) => (
+              <div
+                key={u.id}
+                onClick={() => {
+                  setAuthId(u.id);
+                  setSearchId(u.id);
+                  setShowSuggestions(false);
+                }}
+                className="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
+              >
+                <p className="font-medium">{u.name}</p>
+                <p className="text-sm text-gray-500">{u.email}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Wallet Info */}
@@ -133,7 +166,6 @@ export default function ManageWallets() {
                 </Badge>
               </div>
 
-              {/* Toggle Button */}
               <div className="sm:col-span-2 flex justify-center mt-4">
                 <Button
                   onClick={handleToggleBlock}

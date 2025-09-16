@@ -71,6 +71,13 @@ export const authApi = createApi({
         method: "PATCH",
       }),
     }),
+    
+    getAllAuthIds: builder.query({
+      query: () => ({
+        url: "/auth/auth-ids",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -81,5 +88,6 @@ export const {
   useGetAllUsersQuery,
   useToggleUserBlockMutation,  
   useToggleAgentMutation,       
-  useToggleUserRoleMutation     
+  useToggleUserRoleMutation,
+  useGetAllAuthIdsQuery,     
 } = authApi;
