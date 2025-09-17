@@ -61,5 +61,5 @@ The application allows users to manage their wallets, view transaction history, 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/2244jhalak/B5A5-DigiPay-Frontend.git
+git clone https://github.com/2244jhalak/DigiPay.git
 cd B5A5-DigiPay-Frontend
