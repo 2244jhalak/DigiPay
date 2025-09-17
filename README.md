@@ -62,4 +62,4 @@ The application allows users to manage their wallets, view transaction history, 
 
 ```bash
 git clone https://github.com/2244jhalak/DigiPay.git
-cd B5A5-DigiPay-Frontend
+cd DigiPay
