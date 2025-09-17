@@ -32,6 +32,7 @@ import FAQ from "@/pages/faq/FAQ";
 import About from "@/pages/about/About";
 import Contact from "@/pages/contact/Contact";
 import Features from "@/pages/features/Features";
+import NotFound from "@/pages/notFound/NotFound";
 
 export const router = createBrowserRouter([
   {
@@ -114,4 +115,5 @@ export const router = createBrowserRouter([
   },
 
   { path: "/unauthorized", element: <Unauthorized /> },
+  { path: "*", element: <NotFound /> },
 ]);

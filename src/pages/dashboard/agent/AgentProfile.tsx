@@ -8,6 +8,7 @@ import { getUser, logout } from "@/utilities/Auth";
 import type { IAuth } from "@/types/auth";
 import { useUpdateProfileMutation } from "@/redux/authSlice";
 import Swal from "sweetalert2";
+import { Copy } from "lucide-react";
 
 const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
@@ -18,7 +19,6 @@ export default function AgentProfile() {
     name: "",
     email: "",
     profileImage: "",
-    
     newPassword: "",
   });
   const [file, setFile] = useState<File | null>(null);
@@ -32,7 +32,6 @@ export default function AgentProfile() {
         name: data.name,
         email: data.email,
         profileImage: data.profileImage || "",
-        
         newPassword: "",
       });
   }, []);
@@ -80,7 +79,6 @@ export default function AgentProfile() {
         name: formData.name,
         email: formData.email,
         profileImage: profileImageUrl,
-        
         newPassword: formData.newPassword || undefined,
       }).unwrap();
 
@@ -106,6 +104,26 @@ export default function AgentProfile() {
     }
   };
 
+  // Copy AuthId
+  const handleCopyId = async (id: string) => {
+    try {
+      await navigator.clipboard.writeText(id);
+      Swal.fire({
+        icon: "success",
+        title: "Copied!",
+        text: "AuthId copied to clipboard.",
+        timer: 1500,
+        showConfirmButton: false,
+      });
+    } catch {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: "Could not copy AuthId.",
+      });
+    }
+  };
+
   if (!user) {
     return (
       <Card className="w-full max-w-md mx-auto mt-20 p-6 shadow-lg rounded-3xl bg-white/30 backdrop-blur-lg">
@@ -121,12 +139,25 @@ export default function AgentProfile() {
       <CardHeader className="flex flex-col items-center gap-4 p-6">
         <Avatar className="h-24 w-24 ring-2 ring-[#18BC9C]">
           <AvatarImage src={user.profileImage || ""} alt={user.name} />
-          <AvatarFallback>{user.name ? user.name[0].toUpperCase() : "U"}</AvatarFallback>
+          <AvatarFallback>
+            {user.name ? user.name[0].toUpperCase() : "U"}
+          </AvatarFallback>
         </Avatar>
         <CardTitle className="text-2xl font-bold text-gray-800 dark:text-white">
           {user.name}
         </CardTitle>
         <p className="text-sm text-gray-500 dark:text-gray-300">{user.role}</p>
+
+        {/* Auth ID with Copy button */}
+        <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-300">
+          <span>AuthId: {user.id}</span>
+          <button
+            onClick={() => handleCopyId(user.id)}
+            className="p-1 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+          >
+            <Copy size={16} className="text-gray-600 dark:text-gray-300" />
+          </button>
+        </div>
       </CardHeader>
 
       <CardContent className="p-6 space-y-4">
@@ -158,7 +189,6 @@ export default function AgentProfile() {
             accept="image/*"
             className="bg-white/20 backdrop-blur-md border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[#18BC9C] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
           />
-          
           {/* New Password */}
           <Input
             type="password"

@@ -22,6 +22,7 @@ export default function ManageWallets() {
   const [authId, setAuthId] = useState("");
   const [searchId, setSearchId] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searching, setSearching] = useState(false); // ✅ search loading state
 
   // ✅ সব Auth ID ফেচ করা
   const { data: authIds } = useGetAllAuthIdsQuery({});
@@ -35,10 +36,15 @@ export default function ManageWallets() {
   const [toggleWalletBlock, { isLoading: isToggling }] =
     useToggleWalletBlockMutation();
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     if (authId.trim()) {
+      setSearching(true); // 🔄 searching শুরু
       setSearchId(authId.trim());
-      setShowSuggestions(false); // search করার পর dropdown বন্ধ হবে
+      setShowSuggestions(false);
+      // সামান্য delay দিলে loading সুন্দরভাবে দেখা যাবে
+      setTimeout(() => {
+        setSearching(false);
+      }, 800);
     }
   };
 
@@ -83,11 +89,22 @@ export default function ManageWallets() {
           value={authId}
           onChange={(e) => setAuthId(e.target.value)}
           onFocus={() => setShowSuggestions(true)}
-          onBlur={() => setTimeout(() => setShowSuggestions(false), 150)} // click করার সময় dropdown না হারায়
+          onBlur={() => setTimeout(() => setShowSuggestions(false), 150)}
           className="flex-1"
         />
-        <Button onClick={handleSearch} className="w-full sm:w-auto">
-          Search
+        <Button
+          onClick={handleSearch}
+          className="w-full sm:w-auto cursor-pointer"
+          disabled={searching}
+        >
+          {searching ? (
+            <>
+              <Loader2 className="w-4 h-4 animate-spin mr-2" />
+              Searching...
+            </>
+          ) : (
+            "Search"
+          )}
         </Button>
 
         {/* Suggestion Dropdown */}
