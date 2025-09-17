@@ -1,69 +1,67 @@
-# React + TypeScript + Vite
+# B5A5 DigiPay Frontend 💳
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Project Overview
 
-Currently, two official plugins are available:
+**B5A5 DigiPay Frontend** is a modern, responsive, and role-based client application for the DigiPay digital wallet system, similar to popular digital wallets like Bkash or Nagad.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This frontend is built using **React (Vite)**, **TypeScript**, **Redux Toolkit Query (RTK Query)**, and **Tailwind CSS**. It communicates seamlessly with the backend API to provide a secure, fast, and user-friendly experience for **Admins**, **Agents**, and **Users**.  
 
-## Expanding the ESLint configuration
+The application allows users to manage their wallets, view transaction history, and perform financial operations such as sending money, withdrawing, and cashing in/out (for Agents). Admins can manage users, approve or suspend agents, view all transactions, and block/unblock wallets.  
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+🔗 **Live URL:** [https://digipay-six.vercel.app/](https://digipay-six.vercel.app/)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🚀 Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Role-Based Access
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **Admin:**  
+  - Manage all users and agents  
+  - Approve or suspend agents  
+  - Block or unblock user wallets  
+  - View all transactions across the platform  
+  - Toggle user/agent roles  
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Agent:**  
+  - Perform cash-in (add money) and cash-out (withdraw money) operations for users  
+  - Access user transaction history  
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Normal User:**  
+  - View personal wallet balance and transaction history  
+  - Perform top-up (add money), withdraw money, and send money to other users  
+
+### General Frontend Features
+
+- ✅ Authentication & role-based authorization using JWT  
+- ✅ Responsive UI with Tailwind CSS and shadcn/ui components  
+- ✅ Loading spinners and error handling using RTK Query  
+- ✅ Interactive dashboards for Admin, Agent, and User  
+- ✅ Copy-to-clipboard functionality for Auth IDs  
+- ✅ SweetAlert2 for notifications and confirmations  
+- ✅ Modern reusable components for buttons, cards, inputs, avatars, badges, etc.  
+
+---
+
+---
+
+## 🛠️ Technologies Used
+
+- **Frontend Framework:** React (Vite)  
+- **Language:** TypeScript  
+- **State Management:** Redux Toolkit & RTK Query  
+- **Styling:** Tailwind CSS, shadcn/ui  
+- **Routing:** React Router DOM  
+- **Icons:** lucide-react  
+- **Notifications & Alerts:** SweetAlert2  
+- **Backend API:** Node.js, Express.js, MongoDB  
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/2244jhalak/B5A5-DigiPay-Frontend.git
+cd B5A5-DigiPay-Frontend
