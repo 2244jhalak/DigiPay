@@ -1,4 +1,4 @@
-# B5A5 DigiPay Frontend 💳
+
 
 ## 📌 Project Overview
 
@@ -7,8 +7,6 @@
 This frontend is built using **React (Vite)**, **TypeScript**, **Redux Toolkit Query (RTK Query)**, and **Tailwind CSS**. It communicates seamlessly with the backend API to provide a secure, fast, and user-friendly experience for **Admins**, **Agents**, and **Users**.  
 
 The application allows users to manage their wallets, view transaction history, and perform financial operations such as sending money, withdrawing, and cashing in/out (for Agents). Admins can manage users, approve or suspend agents, view all transactions, and block/unblock wallets.  
-
-🔗 **Live URL:** [https://digipay-six.vercel.app/](https://digipay-six.vercel.app/)
 
 ---
 
