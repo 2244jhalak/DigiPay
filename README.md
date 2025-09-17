@@ -2,7 +2,7 @@
 
 ## 📌 Project Overview
 
-**B5A5 DigiPay Frontend** is a modern, responsive, and role-based client application for the DigiPay digital wallet system, similar to popular digital wallets like Bkash or Nagad.  
+**DigiPay** is a modern, responsive, and role-based client application for the DigiPay digital wallet system, similar to popular digital wallets like Bkash or Nagad.  
 
 This frontend is built using **React (Vite)**, **TypeScript**, **Redux Toolkit Query (RTK Query)**, and **Tailwind CSS**. It communicates seamlessly with the backend API to provide a secure, fast, and user-friendly experience for **Admins**, **Agents**, and **Users**.  
 
