@@ -63,3 +63,33 @@ The application allows users to manage their wallets, view transaction history, 
 ```bash
 git clone https://github.com/2244jhalak/DigiPay.git
 cd DigiPay
+npm install
+```
+### 2. Setup & Environment Variables
+
+```bash
+VITE_CLOUDINARY_CLOUD_NAME= YOUR CLOUDINARY_CLOUD_NAME
+VITE_CLOUDINARY_UPLOAD_PRESET= YOUR CLOUDINARY_UPLOAD_PRESET
+VITE_SERVER_LINK=https://digipay-api.vercel.app
+VITE_SERVICE_ID= YOUR SERVICE_ID
+VITE_TEMPLATE_ID= YOUR TEMPLATE_ID
+VITE_PUBLIC_KEY= YOUR PUBLIC_KEY
+      
+```
+### 3. Credentials
+
+```bash
+
+Admin:
+
+Email: admin@digipay.com
+
+Password: 123456
+
+Agent:
+
+Email: agent@digipay.com
+
+Password: 123456
+
+```
