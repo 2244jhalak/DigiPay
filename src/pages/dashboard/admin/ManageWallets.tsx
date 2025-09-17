@@ -22,12 +22,12 @@ export default function ManageWallets() {
   const [authId, setAuthId] = useState("");
   const [searchId, setSearchId] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(false);
-  const [searching, setSearching] = useState(false); // ✅ search loading state
+  const [searching, setSearching] = useState(false); 
 
-  // ✅ সব Auth ID ফেচ করা
+ 
   const { data: authIds } = useGetAllAuthIdsQuery({});
 
-  // ✅ নির্দিষ্ট Wallet ফেচ
+ 
   const { data: wallet, isLoading, isError, refetch } = useGetWalletQuery(
     { authId: searchId },
     { skip: !searchId }
@@ -38,10 +38,10 @@ export default function ManageWallets() {
 
   const handleSearch = async () => {
     if (authId.trim()) {
-      setSearching(true); // 🔄 searching শুরু
+      setSearching(true); 
       setSearchId(authId.trim());
       setShowSuggestions(false);
-      // সামান্য delay দিলে loading সুন্দরভাবে দেখা যাবে
+      
       setTimeout(() => {
         setSearching(false);
       }, 800);
@@ -70,7 +70,7 @@ export default function ManageWallets() {
     }
   };
 
-  // ✅ Filter করা হচ্ছে typed value অনুযায়ী
+  
   const filteredAuthIds =
     authIds?.authIds?.filter((u: any) =>
       u.id.toLowerCase().includes(authId.toLowerCase())
