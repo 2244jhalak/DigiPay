@@ -18,7 +18,7 @@ export default function ManageUsers() {
   const loggedInUser = getUser();
   const { data, isLoading, isError, refetch } = useGetAllUsersQuery(
     loggedInUser?.id,
-    { skip: !loggedInUser?.id }
+    { skip: !loggedInUser?.id, pollingInterval: 1000, }
   );
 
   const [toggleBlock] = useToggleUserBlockMutation();
