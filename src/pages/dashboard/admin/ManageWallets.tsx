@@ -98,7 +98,7 @@ export default function ManageWallets() {
           disabled={searching}
         >
           {searching ? (
-            <div className="flex justify-center items-center h-40">
+            <div className="flex justify-center items-center h-44">
         <svg
           className="h-8 w-8 text-[#18BC9C] animate-spin"
           xmlns="http://www.w3.org/2000/svg"
