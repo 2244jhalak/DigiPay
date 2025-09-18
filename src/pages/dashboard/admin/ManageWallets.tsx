@@ -93,37 +93,38 @@ export default function ManageWallets() {
           className="flex-1"
         />
         <Button
-          onClick={handleSearch}
-          className="w-full sm:w-auto cursor-pointer"
-          disabled={searching}
-        >
-          {searching ? (
-            <div className="flex justify-center items-center h-44">
-        <svg
-          className="h-8 w-8 text-[#18BC9C] animate-spin"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          />
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8v8H4z"
-          />
-        </svg>
-      </div>
-          ) : (
-            "Search"
-          )}
-        </Button>
+  onClick={handleSearch}
+  className="w-full sm:w-auto cursor-pointer flex justify-center items-center"
+  disabled={searching}
+>
+  {searching ? (
+    <div className="flex justify-center items-center">
+      <svg
+        className="h-5 w-5 text-[#18BC9C] animate-spin"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          className="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="4"
+        />
+        <path
+          className="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v8H4z"
+        />
+      </svg>
+    </div>
+  ) : (
+    "Search"
+  )}
+</Button>
+
 
         {/* Suggestion Dropdown */}
         {showSuggestions && filteredAuthIds.length > 0 && (
