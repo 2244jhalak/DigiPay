@@ -102,7 +102,7 @@ export default function CashIn() {
             type="number"
             value={amount}
             onChange={(e) => setAmount(Number(e.target.value))}
-            placeholder="Amount to send"
+            placeholder="Amount to cash in"
             className="bg-white/20 backdrop-blur-md border border-gray-200 dark:border-gray-700 focus:ring-2 focus:ring-[#18BC9C] text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
             required
           />
