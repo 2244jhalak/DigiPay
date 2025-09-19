@@ -9,6 +9,10 @@ This frontend is built using **React (Vite)**, **TypeScript**, **Redux Toolkit Q
 The application allows users to manage their wallets, view transaction history, and perform financial operations such as sending money, withdrawing, and cashing in/out (for Agents). Admins can manage users, approve or suspend agents, view all transactions, and block/unblock wallets.  
 
 ---
+## 📌 Live Link
+https://digipay-six.vercel.app/
+---
+---
 
 ## 🚀 Features
 
