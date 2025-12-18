@@ -65,7 +65,7 @@ export default function ManageWallets() {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: err?.data?.message || "Something went wrong",
+        text: err?.data?.message || "Something went wrong!!",
       });
     }
   };
